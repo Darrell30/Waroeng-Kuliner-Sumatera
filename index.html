@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waroeng Nusantara Digital</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <div class="header-container">
+            <h1>Waroeng Nusantara Digital</h1>
+            <p class="tagline">Jelajahi Cita Rasa Khas Indonesia</p>
+        </div>
+    </header>
+
+    <main>
+        <div class="filter-container">
+            <h2>Pencarian Menu</h2>
+            <div class="filter-controls">
+                <input type="text" id="search-input" placeholder="Ketik nama makanan...">
+                <select id="region-filter">
+                    <option value="all">Semua Daerah</option>
+                    <option value="jawa">Jawa</option>
+                    <option value="sumatra">Sumatra</option>
+                    <option value="kalimantan">Kalimantan</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="content-wrapper">
+            <section id="food-catalog">
+                
+                <article class="food-card"> 
+                    <img src="img/rendang_sumatra.jpg" alt="Rendang Daging">
+                    <div class="card-content">
+                        <h3>Rendang Daging</h3>
+                        <p class="origin">Asal: Sumatra</p>
+                        <div class="card-actions">
+                            <button class="action-btn favorite-btn" title="Simpan ke Favorit">⭐</button>
+                            <button class="action-btn like-btn">👍 <span class="like-count">125</span></button>
+                            <button class="action-btn dislike-btn">👎 <span class="dislike-count">8</span></button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="food-card">
+                    <img src="img/sate_ayam.jpg" alt="Sate Ayam Madura">
+                    <div class="card-content">
+                        <h3>Sate Ayam</h3>
+                        <p class="origin">Asal: Jawa</p>
+                        <div class="card-actions">
+                            <button class="action-btn favorite-btn" title="Simpan ke Favorit">⭐</button>
+                            <button class="action-btn like-btn">👍 <span class="like-count">210</span></button>
+                            <button class="action-btn dislike-btn">👎 <span class="dislike-count">12</span></button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="food-card">
+                    <img src="img/soto_banjar.jpg" alt="Soto Banjar">
+                    <div class="card-content">
+                        <h3>Soto Banjar</h3>
+                        <p class="origin">Asal: Kalimantan</p>
+                        <div class="card-actions">
+                            <button class="action-btn favorite-btn" title="Simpan ke Favorit">⭐</button>
+                            <button class="action-btn like-btn">👍 <span class="like-count">98</span></button>
+                            <button class="action-btn dislike-btn">👎 <span class="dislike-count">5</span></button>
+                        </div>
+                    </div>
+                </article>
+
+                </section>
+
+            <aside id="favorites-section">
+                <h2>Buku Resep Favorit</h2>
+                <div id="favorites-list">
+                    <p class="empty-fav">Belum ada makanan favorit yang disimpan.</p>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Kelompok 2 - Waroeng Nusantara Digital</p>
+    </footer>
+
+</body>
+</html>
