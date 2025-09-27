@@ -13,8 +13,17 @@
 
     <header>
         <div class="header-container">
-            <h1>Waroeng Nusantara Digital</h1>
-            <p class="tagline">Jelajahi Cita Rasa Khas Indonesia</p>
+            <div class="header-title">
+                <h1>Waroeng Nusantara Digital</h1>
+                <p class="tagline">Jelajahi Cita Rasa Khas Indonesia</p>
+            </div>
+            <div class="user-actions">
+                <button id="login-button" class="header-btn">Login</button>
+                <div id="user-greeting" class="hidden">
+                    <span>Selamat Datang, <b id="username-display"></b>!</span>
+                    <button id="logout-button" class="header-btn-logout">Logout</button>
+                </div>
+            </div>
         </div>
     </header>
 
@@ -35,22 +44,13 @@
         <div class="content-wrapper">
             <section id="food-catalog">
                 
-                <!-- Rendang -->
                 <article class="food-card"> 
                     <img src="img/rendang_sumatra.jpg" alt="Rendang Daging" class="food-img"
-                        data-title="Rendang Daging"
-                        data-desc="Rendang adalah masakan khas Minangkabau yang mendunia."
-                        data-cook="&lt;ul&gt;
-                            &lt;li&gt;Siapkan daging sapi, potong kotak ukuran sedang (±2–3 cm).&lt;/li&gt;
-                            &lt;li&gt;Haluskan bumbu (bawang merah, bawang putih, cabai, lengkuas, kunyit, jahe).&lt;/li&gt;
-                            &lt;li&gt;Tumis bumbu halus sampai harum, masukkan serai &amp; daun jeruk.&lt;/li&gt;
-                            &lt;li&gt;Tuang santan, masukkan daging, aduk rata.&lt;/li&gt;
-                            &lt;li&gt;Tambahkan garam &amp; gula, kecilkan api.&lt;/li&gt;
-                            &lt;li&gt;Masak perlahan 3–4 jam hingga kuah kering &amp; bumbu meresap.&lt;/li&gt;
-                            &lt;li&gt;Angkat setelah daging empuk &amp; berwarna gelap.&lt;/li&gt;
-                        &lt;/ul&gt;"
-                        data-history="Rendang berasal dari Sumatra Barat dan disajikan pada acara adat."
-                        data-image="img/rendang_sumatra.jpg">
+                         data-title="Rendang Daging"
+                         data-desc="Rendang adalah masakan khas Minangkabau yang mendunia."
+                         data-cook="&lt;ul&gt;&lt;li&gt;Siapkan daging sapi.&lt;/li&gt;&lt;li&gt;Haluskan bumbu.&lt;/li&gt;&lt;li&gt;Tumis bumbu halus.&lt;/li&gt;&lt;li&gt;Masak perlahan 3–4 jam.&lt;/li&gt;&lt;/ul&gt;"
+                         data-history="Rendang berasal dari Sumatra Barat."
+                         data-image="img/rendang_sumatra.jpg">
                     <div class="card-content">
                         <h3>Rendang Daging</h3>
                         <p class="origin">Asal: Sumatra</p>
@@ -58,25 +58,18 @@
                             <button class="action-btn favorite-btn" title="Simpan ke Favorit">⭐</button>
                             <button class="action-btn like-btn">👍 <span class="like-count">0</span></button>
                             <button class="action-btn dislike-btn">👎 <span class="dislike-count">0</span></button>
+                            <button class="action-btn comment-card-btn" title="Beri Komentar">💬</button> 
                         </div>
                     </div>
                 </article>
 
-                <!-- Sate Ayam -->
                 <article class="food-card">
                     <img src="img/sate_ayam.jpg" alt="Sate Ayam Madura" class="food-img"
-                        data-title="Sate Ayam"
-                        data-desc="Sate ayam adalah daging ayam yang ditusuk dan dibakar dengan bumbu kacang."
-                        data-cook="&lt;ul&gt;
-                            &lt;li&gt;Potong ayam kecil-kecil lalu tusuk dengan bambu.&lt;/li&gt;
-                            &lt;li&gt;Lumuri ayam dengan kecap &amp; minyak bawang.&lt;/li&gt;
-                            &lt;li&gt;Buat saus kacang (haluskan kacang, bawang, cabai, lalu masak dengan gula merah &amp; air asam).&lt;/li&gt;
-                            &lt;li&gt;Panggang sate di atas arang atau wajan datar, oles kecap saat membakar.&lt;/li&gt;
-                            &lt;li&gt;Balik sate hingga matang &amp; kecokelatan.&lt;/li&gt;
-                            &lt;li&gt;Sajikan sate dengan saus kacang, irisan bawang &amp; lontong.&lt;/li&gt;
-                        &lt;/ul&gt;"
-                        data-history="Berasal dari Madura, kini populer di seluruh Indonesia."
-                        data-image="img/sate_ayam.jpg">
+                         data-title="Sate Ayam"
+                         data-desc="Sate ayam adalah daging ayam yang ditusuk dan dibakar."
+                         data-cook="&lt;ul&gt;&lt;li&gt;Potong ayam kecil-kecil.&lt;/li&gt;&lt;li&gt;Buat saus kacang.&lt;/li&gt;&lt;li&gt;Panggang sate di atas arang.&lt;/li&gt;&lt;/ul&gt;"
+                         data-history="Berasal dari Madura."
+                         data-image="img/sate_ayam.jpg">
                     <div class="card-content">
                         <h3>Sate Ayam</h3>
                         <p class="origin">Asal: Jawa</p>
@@ -84,25 +77,18 @@
                             <button class="action-btn favorite-btn" title="Simpan ke Favorit">⭐</button>
                             <button class="action-btn like-btn">👍 <span class="like-count">0</span></button>
                             <button class="action-btn dislike-btn">👎 <span class="dislike-count">0</span></button>
+                            <button class="action-btn comment-card-btn" title="Beri Komentar">💬</button> 
                         </div>
                     </div>
                 </article>
 
-                <!-- Soto Banjar -->
                 <article class="food-card">
                     <img src="img/soto_banjar.jpg" alt="Soto Banjar" class="food-img"
-                        data-title="Soto Banjar"
-                        data-desc="Soto Banjar adalah sup ayam khas Kalimantan Selatan dengan rempah harum."
-                        data-cook="&lt;ul&gt;
-                            &lt;li&gt;Cuci ayam, rebus untuk membuat kaldu.&lt;/li&gt;
-                            &lt;li&gt;Tumis bumbu halus (bawang merah, bawang putih, jahe) lalu masukkan ke kaldu.&lt;/li&gt;
-                            &lt;li&gt;Tambahkan kayu manis, cengkeh, kapulaga, lalu rebus kembali ayam hingga empuk.&lt;/li&gt;
-                            &lt;li&gt;Siapkan pelengkap: bihun, lontong, bawang goreng, daun bawang.&lt;/li&gt;
-                            &lt;li&gt;Taruh bihun/lontong di mangkuk, tambahkan ayam &amp; kuah.&lt;/li&gt;
-                            &lt;li&gt;Taburi bawang goreng, daun bawang, dan jeruk nipis.&lt;/li&gt;
-                        &lt;/ul&gt;"
-                        data-history="Hidangan tradisional dari suku Banjar sejak abad ke-16."
-                        data-image="img/soto_banjar.jpg">
+                         data-title="Soto Banjar"
+                         data-desc="Soto Banjar adalah sup ayam khas Kalimantan Selatan."
+                         data-cook="&lt;ul&gt;&lt;li&gt;Rebus ayam untuk kaldu.&lt;/li&gt;&lt;li&gt;Tumis bumbu halus.&lt;/li&gt;&lt;li&gt;Siapkan pelengkap.&lt;/li&gt;&lt;/ul&gt;"
+                         data-history="Hidangan tradisional dari suku Banjar."
+                         data-image="img/soto_banjar.jpg">
                     <div class="card-content">
                         <h3>Soto Banjar</h3>
                         <p class="origin">Asal: Kalimantan</p>
@@ -110,10 +96,10 @@
                             <button class="action-btn favorite-btn" title="Simpan ke Favorit">⭐</button>
                             <button class="action-btn like-btn">👍 <span class="like-count">0</span></button>
                             <button class="action-btn dislike-btn">👎 <span class="dislike-count">0</span></button>
+                            <button class="action-btn comment-card-btn" title="Beri Komentar">💬</button> 
                         </div>
                     </div>
                 </article>
-
             </section>
 
             <aside id="favorites-section">
@@ -125,7 +111,6 @@
         </div>
     </main>
 
-    <!-- Modal Pop Up Utama -->
     <div id="food-modal" class="modal">
         <div class="modal-content">
             <span class="close-btn">&times;</span>
@@ -137,42 +122,35 @@
                 <p><b>Deskripsi:</b> <span id="modal-desc"></span></p>
                 <p><b>Cara Masak:</b> <span id="modal-cook"></span></p>
                 <p><b>Sejarah:</b> <span id="modal-history"></span></p>
-                <!-- Tombol Aksi di Modal -->
                 <div class="modal-actions">
                     <button class="action-btn modal-fav-btn">⭐</button>
                     <button class="action-btn modal-like-btn">👍 <span class="modal-like-count">0</span></button>
                     <button class="action-btn modal-dislike-btn">👎 <span class="modal-dislike-count">0</span></button>
                 </div>
-                <button id="comment-btn" class="comment-btn">💬 Comment</button>
+                <button id="comment-btn" class="comment-btn">💬 Tulis Komentar</button>
             </div>
         </div>
     </div>
 
-    <!-- Modal Pop Up Komentar -->
     <div id="comment-modal" class="comment-modal">
         <div class="comment-modal-content">
             <div class="comment-header">
                 <h3 id="comment-modal-title">Komentar untuk: </h3>
                 <span class="close-btn" id="close-comment-modal">&times;</span>
             </div>
-            
-            <!-- Form untuk menambah komentar -->
             <div class="comment-form">
-                <h4 style="margin-bottom: 1rem; color: #5a4635;">Tambahkan Komentar Anda</h4>
                 <div class="form-group">
                     <label for="comment-name">Nama:</label>
                     <input type="text" id="comment-name" placeholder="Masukkan nama Anda">
                 </div>
                 <div class="form-group">
                     <label for="comment-text">Komentar:</label>
-                    <textarea id="comment-text" placeholder="Bagikan pengalaman Anda dengan resep ini..."></textarea>
+                    <textarea id="comment-text" placeholder="Bagikan pengalaman Anda..."></textarea>
                 </div>
                 <button id="submit-comment" class="submit-comment-btn">Kirim Komentar</button>
             </div>
-
-            <!-- Daftar komentar -->
             <div class="comments-section">
-                <h4 style="margin-bottom: 1rem; color: #5a4635;">Komentar User</h4>
+                <h4>Komentar User</h4>
                 <div id="comments-list" class="comments-list">
                     <div class="no-comments">Belum ada komentar untuk resep ini.</div>
                 </div>
@@ -180,28 +158,26 @@
         </div>
     </div>
 
-    <!-- ✅ Modal Login -->
     <div id="login-modal" class="login-modal">
-      <div class="login-modal-content">
-        <span id="close-login-modal" class="close-login">&times;</span>
-        <h2>Login</h2>
-        <div class="form-group">
-          <label for="login-name">Nama</label>
-          <input type="text" id="login-name" placeholder="Masukkan nama">
+        <div class="login-modal-content">
+            <span id="close-login-modal" class="close-btn">&times;</span>
+            <h2>Login</h2>
+            <div class="form-group">
+                <label for="login-name">Nama</label>
+                <input type="text" id="login-name" placeholder="Masukkan nama">
+            </div>
+            <div class="form-group">
+                <label for="login-password">Password</label>
+                <input type="password" id="login-password" placeholder="Masukkan password">
+            </div>
+            <button id="login-submit" class="login-btn">Login</button>
         </div>
-        <div class="form-group">
-          <label for="login-password">Password</label>
-          <input type="password" id="login-password" placeholder="Masukkan password">
-        </div>
-        <button id="login-submit" class="login-btn">Login</button>
-      </div>
     </div>
-
+    
     <footer>
         <p>&copy; 2025 Kelompok 2 - Waroeng Nusantara Digital</p>
     </footer>
 
-    <!-- Script -->
     <script src="script.js"></script>
 </body>
 </html>
