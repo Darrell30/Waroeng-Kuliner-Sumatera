@@ -103,6 +103,7 @@ main {
 }
 
 .food-card {
+    max-width: 400px;
     background-color: #fffdf7;
     border: 2px solid #a47551;
     border-radius: 8px;
@@ -117,7 +118,7 @@ main {
 }
 
 .food-card img {
-    width: 100%;
+    width: 400px;
     height: 200px;
     object-fit: cover;
     border-bottom: 2px solid #a47551;
@@ -519,7 +520,6 @@ footer {
     color: #e0d9ce;
 }
 
-/* --- RESPONSIVE --- */
 @media (max-width: 992px) {
     .content-wrapper { flex-direction: column; }
 }
@@ -529,7 +529,6 @@ footer {
     header h1 { font-size: 2rem; }
     .filter-controls { flex-direction: column; }
 
-    /* ✅ modal lebih kecil di HP */
     .modal-content {
         flex-direction: column;
         margin: 5% auto;
@@ -550,7 +549,6 @@ footer {
     }
 }
 
-/* ✅ TAMBAHAN: perbaikan agar box tidak melebar saat difilter */
 #food-catalog {
     align-items: start;
 }
