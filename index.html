@@ -17,14 +17,26 @@
                 <h1>Waroeng Kuliner Sumatra</h1>
                 <p class="tagline">Jelajahi Cita Rasa Khas Pulau Andalas</p>
             </div>
-            <div class="user-actions">
+            
+            <div class="user-actions-desktop">
                 <button id="login-button" class="header-btn">Login</button>
                 <div id="user-greeting" class="hidden">
                     <span>Selamat Datang, <b id="username-display"></b>!</span>
                     <button id="logout-button" class="header-btn-logout">Logout</button>
                 </div>
             </div>
+
+            <button id="hamburger-btn" class="hamburger-btn">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
         </div>
+        
+        <nav id="mobile-nav" class="mobile-nav">
+            <a href="#favorites-section" class="mobile-link">Buku Resep Favorit</a>
+            <button id="mobile-login-btn" class="header-btn">Login</button>
+        </nav>
     </header>
 
     <main>
@@ -125,6 +137,10 @@
     <footer>
         <p>&copy; 2025 Kelompok 2 - Waroeng Kuliner Sumatra</p>
     </footer>
+
+    <button id="scroll-top-btn" class="scroll-top-btn" title="Kembali ke atas">
+        &uarr;
+    </button>
 
     <script src="data.js"></script>
     <script src="script.js"></script>

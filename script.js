@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Data makanan sekarang dimuat dari file data.js
+    // Data makanan dimuat dari file data.js
 
     // --- ELEMENT SELECTORS ---
     const foodCatalog = document.getElementById("food-catalog");
@@ -35,6 +35,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const logoutButton = document.getElementById("logout-button");
     const userGreeting = document.getElementById("user-greeting");
     const usernameDisplay = document.getElementById("username-display");
+    const hamburgerBtn = document.getElementById("hamburger-btn");
+    const mobileNav = document.getElementById("mobile-nav");
+    const mobileLoginBtn = document.getElementById("mobile-login-btn");
+    const scrollTopBtn = document.getElementById("scroll-top-btn");
 
     // --- STATE & STORAGE ---
     const commentsStorage = {};
@@ -43,8 +47,36 @@ document.addEventListener("DOMContentLoaded", () => {
     let loggedUser = "";
     let currentFoodId = "";
 
-    // --- FUNGSI RENDER & FILTER ---
+    // --- FUNGSI BARU UNTUK HAMBURGER & SCROLL ---
+    hamburgerBtn.addEventListener("click", () => {
+        hamburgerBtn.classList.toggle("active");
+        mobileNav.classList.toggle("active");
+    });
 
+    mobileNav.addEventListener("click", (e) => {
+        if (e.target.classList.contains("mobile-link") || e.target.id === "mobile-login-btn") {
+            hamburgerBtn.classList.remove("active");
+            mobileNav.classList.remove("active");
+        }
+    });
+
+    mobileLoginBtn.addEventListener("click", () => {
+        loginModal.style.display = 'block';
+    });
+
+    window.addEventListener("scroll", () => {
+        if (window.scrollY > 300) {
+            scrollTopBtn.classList.add("visible");
+        } else {
+            scrollTopBtn.classList.remove("visible");
+        }
+    });
+
+    scrollTopBtn.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // --- FUNGSI RENDER & FILTER ---
     const renderFoodCards = (dataToRender) => {
         foodCatalog.innerHTML = "";
         dataToRender.forEach(food => {
@@ -52,11 +84,14 @@ document.addEventListener("DOMContentLoaded", () => {
             const card = document.createElement("article");
             card.className = "food-card";
             card.setAttribute('data-id', food.id);
+
+            // ▼▼▼ PERUBAHAN DI SINI: Menambahkan deskripsi ke dalam kartu ▼▼▼
             card.innerHTML = `
                 <img src="${food.image}" alt="${food.title}" class="food-img">
                 <div class="card-content">
                     <h3>${food.title}</h3>
                     <p class="origin">${food.origin}</p>
+                    <p class="card-description">${food.description}</p> 
                     <div class="card-actions">
                         <button class="action-btn favorite-btn" title="Simpan ke Favorit">⭐</button>
                         <button class="action-btn like-btn">👍 <span class="like-count">${reactionsStorage[food.id].likes}</span></button>
@@ -81,31 +116,36 @@ document.addEventListener("DOMContentLoaded", () => {
         renderFoodCards(filteredData);
     };
 
+    // ... (Sisa fungsi JavaScript Anda tetap sama persis)
     const addEventListenersToCards = () => {
         document.querySelectorAll(".food-card").forEach(card => {
             const id = card.dataset.id;
             const food = foodData.find(f => f.id === id);
-            card.querySelector(".food-img").addEventListener("click", () => openRecipeModal(id));
-            card.querySelector("h3").addEventListener("click", () => openRecipeModal(id)); // Menambahkan klik ke judul
+            // Membuat seluruh kartu bisa diklik, kecuali tombol aksi
+            card.addEventListener("click", (e) => {
+                if (!e.target.closest('.card-actions')) {
+                    openRecipeModal(id);
+                }
+            });
             card.querySelector(".favorite-btn").addEventListener("click", (e) => {
-                e.stopPropagation(); // Mencegah modal terbuka saat tombol favorit diklik
+                e.stopPropagation();
                 if (!isLoggedIn) return loginModal.style.display = 'block';
-                addFavorite(food.title, food.image, food.id); // Teruskan food.id
+                addFavorite(food.title, food.image, food.id);
             });
             card.querySelector(".like-btn").addEventListener("click", (e) => {
-                e.stopPropagation(); // Mencegah modal terbuka
+                e.stopPropagation();
                 if (!isLoggedIn) return loginModal.style.display = 'block';
                 reactionsStorage[id].likes++;
                 updateReactions(id);
             });
             card.querySelector(".dislike-btn").addEventListener("click", (e) => {
-                e.stopPropagation(); // Mencegah modal terbuka
+                e.stopPropagation();
                 if (!isLoggedIn) return loginModal.style.display = 'block';
                 reactionsStorage[id].dislikes++;
                 updateReactions(id);
             });
             card.querySelector(".comment-card-btn").addEventListener("click", (e) => {
-                e.stopPropagation(); // Mencegah modal terbuka
+                e.stopPropagation();
                 if (!isLoggedIn) return loginModal.style.display = 'block';
                 currentFoodId = id;
                 commentModal.style.display = "block";
@@ -116,7 +156,6 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
     };
-
     const openRecipeModal = (id) => {
         const food = foodData.find(f => f.id === id);
         if (!food) return;
@@ -133,7 +172,6 @@ document.addEventListener("DOMContentLoaded", () => {
         modalImage.alt = food.title;
         updateReactions(id);
     };
-
     const updateReactions = (id) => {
         const reactions = reactionsStorage[id] || { likes: 0, dislikes: 0 };
         document.querySelectorAll(".food-card").forEach(card => {
@@ -147,30 +185,21 @@ document.addEventListener("DOMContentLoaded", () => {
             modalDislikeCount.innerText = reactions.dislikes;
         }
     };
-
     const disableBodyScroll = () => document.body.classList.add("modal-open");
     const enableBodyScroll = () => document.body.classList.remove("modal-open");
-    
-    const addFavorite = (foodName, imgSrc, foodId) => { // Menerima foodId
-        if (favoritesList.querySelector(`[data-id="${foodId}"]`)) { // Cek berdasarkan ID
-            return alert(`${foodName} sudah ada di favorit.`);
-        }
+    const addFavorite = (foodName, imgSrc, foodId) => {
+        if (favoritesList.querySelector(`[data-id="${foodId}"]`)) return alert(`${foodName} sudah ada di favorit.`);
         const emptyMsg = favoritesList.querySelector(".empty-fav");
         if (emptyMsg) emptyMsg.remove();
         const favItem = document.createElement("div");
         favItem.className = 'fav-item';
-        favItem.setAttribute("data-id", foodId); // Simpan ID makanan di sini
+        favItem.setAttribute("data-id", foodId);
         favItem.innerHTML = `<img src="${imgSrc}" alt="${foodName}"><span>${foodName}</span><button class="remove-fav-btn">Hapus</button>`;
-        
         favItem.addEventListener("click", (e) => {
-            // Pastikan klik tidak berasal dari tombol 'Hapus'
-            if (!e.target.classList.contains("remove-fav-btn")) {
-                openRecipeModal(foodId); // Buka modal dengan ID ini
-            }
+            if (!e.target.classList.contains("remove-fav-btn")) openRecipeModal(foodId);
         });
-
         favItem.querySelector('.remove-fav-btn').onclick = (e) => {
-            e.stopPropagation(); // Mencegah klik tombol 'Hapus' membuka modal
+            e.stopPropagation();
             favItem.remove();
             if (favoritesList.children.length === 0) {
                  favoritesList.innerHTML = '<p class="empty-fav">Belum ada makanan favorit yang disimpan.</p>';
@@ -179,7 +208,6 @@ document.addEventListener("DOMContentLoaded", () => {
         favoritesList.appendChild(favItem);
         alert(`${foodName} ditambahkan ke favorit!`);
     };
-
     const displayComments = (id) => {
         const comments = commentsStorage[id] || [];
         commentsList.innerHTML = "";
@@ -194,7 +222,6 @@ document.addEventListener("DOMContentLoaded", () => {
             commentsList.appendChild(commentElement);
         });
     };
-
     const closeAllModals = () => {
         if (modal.style.display === "flex") {
             modal.classList.remove("show");
@@ -204,11 +231,10 @@ document.addEventListener("DOMContentLoaded", () => {
         commentModal.style.display = "none";
         loginModal.style.display = "none";
     };
-    
     modalFavBtn.addEventListener("click", () => {
         if (!isLoggedIn) return loginModal.style.display = 'block';
         const food = foodData.find(f => f.id === currentFoodId);
-        addFavorite(food.title, food.image, food.id); // Teruskan food.id
+        addFavorite(food.title, food.image, food.id);
     });
     modalLikeBtn.addEventListener("click", () => { if (!isLoggedIn) return loginModal.style.display = 'block'; reactionsStorage[currentFoodId].likes++; updateReactions(currentFoodId); });
     modalDislikeBtn.addEventListener("click", () => { if (!isLoggedIn) return loginModal.style.display = 'block'; reactionsStorage[currentFoodId].dislikes++; updateReactions(currentFoodId); });
@@ -236,30 +262,57 @@ document.addEventListener("DOMContentLoaded", () => {
     closeLoginModal.addEventListener("click", () => loginModal.style.display = 'none');
     window.addEventListener("click", (e) => { if (e.target === modal || e.target === commentModal || e.target === loginModal) closeAllModals(); });
     window.addEventListener("keydown", (e) => { if (e.key === "Escape") closeAllModals(); });
+    const updateLoginUI = () => {
+        if (isLoggedIn) {
+            usernameDisplay.innerText = loggedUser;
+            userGreeting.classList.remove("hidden");
+            loginButton.classList.add("hidden");
+            mobileLoginBtn.innerText = 'Logout';
+            mobileLoginBtn.onclick = () => { 
+                logoutButton.click(); 
+            };
+        } else {
+            userGreeting.classList.add("hidden");
+            loginButton.classList.remove("hidden");
+            mobileLoginBtn.innerText = 'Login';
+            mobileLoginBtn.onclick = () => { loginModal.style.display = 'block'; };
+            favoritesList.innerHTML = '<p class="empty-fav">Belum ada makanan favorit yang disimpan.</p>';
+        }
+    };
     loginButton.addEventListener("click", () => loginModal.style.display = 'block');
     logoutButton.addEventListener("click", () => {
-        isLoggedIn = false; loggedUser = "";
-        userGreeting.classList.add("hidden");
-        loginButton.classList.remove("hidden");
-        favoritesList.innerHTML = '<p class="empty-fav">Belum ada makanan favorit yang disimpan.</p>';
+        isLoggedIn = false;
+        loggedUser = "";
+        sessionStorage.removeItem('isLoggedIn');
+        sessionStorage.removeItem('loggedUser');
+        updateLoginUI();
         alert("Anda telah logout.");
     });
     loginSubmit.addEventListener("click", () => {
-        const name = loginNameInput.value.trim(), pass = loginPasswordInput.value.trim();
+        const name = loginNameInput.value.trim();
+        const pass = loginPasswordInput.value.trim();
         if (!name || !pass) return alert("Mohon isi nama dan password!");
-        isLoggedIn = true; loggedUser = name;
-        usernameDisplay.innerText = name;
-        userGreeting.classList.remove("hidden");
-        loginButton.classList.add("hidden");
-        loginNameInput.value = ''; loginPasswordInput.value = '';
+        isLoggedIn = true;
+        loggedUser = name;
+        sessionStorage.setItem('isLoggedIn', 'true');
+        sessionStorage.setItem('loggedUser', name);
+        updateLoginUI();
+        loginNameInput.value = '';
+        loginPasswordInput.value = '';
         loginModal.style.display = "none";
         alert(`Selamat datang, ${name}!`);
     });
-
-    // --- INISIALISASI ---
+    const checkLoginStatus = () => {
+        const storedIsLoggedIn = sessionStorage.getItem('isLoggedIn');
+        const storedLoggedUser = sessionStorage.getItem('loggedUser');
+        if (storedIsLoggedIn === 'true' && storedLoggedUser) {
+            isLoggedIn = true;
+            loggedUser = storedLoggedUser;
+            updateLoginUI();
+        }
+    };
     searchInput.addEventListener("input", filterFoods);
     regionFilter.addEventListener("change", filterFoods);
-
-    // Render semua makanan saat halaman pertama kali dimuat
     renderFoodCards(foodData);
+    checkLoginStatus();
 });

@@ -741,5 +741,56 @@ const foodData = [
             <li>Angkat dan sajikan hangat bersama nasi putih atau nasi uduk, taburi daun kemangi atau seledri sesuai selera.</li>
         </ul>`
     },
-    
+    {
+        id: "gonggong",
+        title: "Gonggong",
+        origin: "Kepulauan Riau",
+        image: "img/gonggong.jpg",
+        description: "Gonggong adalah sejenis siput laut yang menjadi ikon kuliner Kepulauan Riau. Direbus sederhana dengan jahe dan serai, daging gonggong memiliki tekstur kenyal dan rasa gurih manis yang khas. Cara makannya pun unik, yaitu dengan mencungkil dagingnya menggunakan tusuk gigi. Disajikan dengan sambal asam pedas, gonggong menjadi hidangan pembuka atau camilan laut yang sangat digemari.",
+        history: "Gonggong telah menjadi makanan masyarakat pesisir Kepulauan Riau sejak zaman dahulu. Sebagai hasil laut yang melimpah di perairan Bintan dan sekitarnya, gonggong menjadi sumber protein yang mudah didapat. Metode perebusan sederhana dipilih untuk mempertahankan rasa asli lautnya. Hidangan ini melambangkan kehidupan masyarakat bahari yang bersahaja namun kaya akan hasil alam.",
+        cookingSteps: `<ul>
+            <li>Cuci bersih cangkang gonggong dari pasir dan lumpur hingga benar-benar bersih.</li>
+            <li>Siapkan panci besar, masukkan gonggong, air secukupnya hingga terendam.</li>
+            <li>Geprek beberapa ruas jahe dan batang serai, lalu masukkan ke dalam rebusan. Tambahkan sedikit garam.</li>
+            <li>Rebus di atas api sedang selama sekitar 15-20 menit atau hingga dagingnya matang. Jangan merebus terlalu lama agar daging tidak alot.</li>
+            <li>Angkat dan tiriskan. Sajikan gonggong selagi hangat.</li>
+            <li>Siapkan sambal pendamping: ulek cabai rawit, bawang putih, terasi bakar, dan garam. Beri perasan jeruk nipis atau cuka.</li>
+            <li>Nikmati dengan cara mencungkil daging dari cangkangnya menggunakan tusuk gigi lalu cocolkan ke sambal.</li>
+        </ul>`
+    },
+    {
+        id: "otak-otak",
+        title: "Otak-Otak Bakar",
+        origin: "Kepulauan Riau",
+        image: "img/otak_otak_kepri.jpeg",
+        description: "Otak-otak khas Kepulauan Riau terkenal dengan adonan ikan tenggiri segar yang dicampur santan kental dan bumbu rempah. Adonan ini dibungkus daun kelapa atau pisang, lalu dibakar di atas bara arang. Hasilnya adalah penganan dengan aroma asap yang wangi, tekstur lembut dan kenyal, serta rasa gurih ikan yang kuat. Biasanya dinikmati dengan saus cuka merah atau saus kacang pedas.",
+        history: "Otak-otak merupakan warisan kuliner maritim di Selat Malaka. Di Kepulauan Riau, hidangan ini disempurnakan dengan menggunakan ikan tenggiri segar dan dibungkus daun kelapa yang memberikan aroma khas saat dibakar. Awalnya, otak-otak adalah cara nelayan mengolah sisa tangkapan ikan menjadi camilan lezat. Kini, ia menjadi ikon oleh-oleh dan kuliner kebanggaan yang melambangkan kekayaan hasil laut.",
+        cookingSteps: `<ul>
+            <li>Haluskan daging ikan tenggiri segar menggunakan gilingan manual.</li>
+            <li>Campurkan ikan giling dengan santan kental, tepung sagu, bawang putih halus, bawang merah iris, garam, dan gula. Uleni hingga adonan kalis.</li>
+            <li>Siapkan daun kelapa muda atau daun pisang yang sudah dilayukan di atas api.</li>
+            <li>Ambil satu sendok makan adonan, letakkan memanjang di atas daun, lalu bungkus dan sematkan ujungnya dengan lidi.</li>
+            <li>Siapkan panggangan bara api dari arang tempurung kelapa untuk aroma terbaik.</li>
+            <li>Bakar bungkusan otak-otak di atas bara api, bolak-balik hingga daunnya sedikit gosong dan adonan di dalamnya matang sempurna.</li>
+            <li>Sajikan selagi hangat bersama saus cuka merah yang terbuat dari cabai, bawang putih, cuka, dan gula.</li>
+        </ul>`
+    },
+    {
+        id: "lakse-kuah",
+        title: "Lakse Kuah",
+        origin: "Kepulauan Riau",
+        image: "img/lakse_kuah_kepri.jpg",
+        description: "Lakse Kuah adalah hidangan mie sagu khas Melayu Kepulauan Riau yang disajikan dengan kuah kari ikan kental dan pedas. Kuahnya terbuat dari santan, ikan atau udang tumbuk, dan bumbu rempah seperti kunyit, lengkuas, dan serai. Tekstur mie sagu yang kenyal berpadu dengan kuah yang gurih dan kaya rasa, menciptakan hidangan yang hangat dan memuaskan.",
+        history: "Lakse merupakan hidangan yang menunjukkan persilangan budaya antara Melayu, Tionghoa, dan India di wilayah pesisir. Resepnya diadaptasi dari hidangan 'laksa' yang populer di Asia Tenggara. Di Kepulauan Riau, khususnya di Lingga dan Natuna, lakse dibuat menggunakan bahan lokal utama yaitu sagu, yang diolah menjadi mie secara tradisional. Hidangan ini menjadi menu sarapan atau acara istimewa yang melambangkan kekayaan rempah dan hasil laut.",
+        cookingSteps: `<ul>
+            <li>Buat mie sagu secara tradisional: campurkan tepung sagu dengan air panas hingga menjadi adonan liat. Tekan adonan menggunakan cetakan kayu di atas air mendidih. Rebus hingga mie mengapung, angkat, dan sisihkan.</li>
+            <li>Untuk kuah: rebus ikan (biasanya tongkol atau tenggiri), lalu ambil dagingnya dan tumbuk halus. Sisihkan kaldunya.</li>
+            <li>Giling bumbu halus: cabai kering, bawang merah, bawang putih, kunyit, lengkuas, dan serai menggunakan batu gilingan.</li>
+            <li>Tumis bumbu halus hingga harum. Masukkan ikan tumbuk dan aduk rata.</li>
+            <li>Tuang kaldu ikan dan santan kental. Masak dengan api kecil sambil terus diaduk. Bumbui dengan garam.</li>
+            <li>Masak hingga kuah mengental dan mengeluarkan minyak.</li>
+            <li>Letakkan mie sagu dalam mangkuk, lalu siram dengan kuah lakse yang panas.</li>
+            <li>Sajikan dengan taburan tauge segar dan sambal belacan.</li>
+        </ul>`
+    },
 ];
