@@ -41,241 +41,115 @@ document.addEventListener("DOMContentLoaded", () => {
     const scrollTopBtn = document.getElementById("scroll-top-btn");
 
     // --- STATE & STORAGE ---
-    const commentsStorage = {};
-    const reactionsStorage = {}; // Disimpan sementara, reset saat refresh
+    let commentsStorage = JSON.parse(localStorage.getItem('comments')) || {};
+    const reactionsStorage = {};
     let isLoggedIn = false;
     let loggedUser = "";
     let currentFoodId = "";
 
     // --- FUNGSI FAVORIT (DENGAN localStorage) ---
-
-    // Fungsi untuk mendapatkan daftar favorit dari localStorage
-    const getFavorites = () => {
-        if (!isLoggedIn) return [];
-        const favorites = localStorage.getItem(`favorites_${loggedUser}`);
-        return favorites ? JSON.parse(favorites) : [];
-    };
-
-    // Fungsi untuk menyimpan daftar favorit ke localStorage
-    const saveFavorites = (favorites) => {
-        if (!isLoggedIn) return;
-        localStorage.setItem(`favorites_${loggedUser}`, JSON.stringify(favorites));
-    };
-
-    // Fungsi untuk merender/menampilkan daftar favorit
+    const getFavorites = () => { if (!isLoggedIn) return []; const favorites = localStorage.getItem(`favorites_${loggedUser}`); return favorites ? JSON.parse(favorites) : []; };
+    const saveFavorites = (favorites) => { if (!isLoggedIn) return; localStorage.setItem(`favorites_${loggedUser}`, JSON.stringify(favorites)); };
     const renderFavorites = () => {
-        favoritesList.innerHTML = "";
-        const favorites = getFavorites();
-
-        if (favorites.length === 0) {
-            favoritesList.innerHTML = '<p class="empty-fav">Belum ada makanan favorit yang disimpan.</p>';
-            return;
-        }
-
+        favoritesList.innerHTML = ""; const favorites = getFavorites();
+        if (favorites.length === 0) { favoritesList.innerHTML = '<p class="empty-fav">Belum ada makanan favorit yang disimpan.</p>'; return; }
         favorites.forEach(favId => {
             const food = foodData.find(f => f.id === favId);
             if (food) {
-                const favItem = document.createElement("div");
-                favItem.className = 'fav-item';
-                favItem.setAttribute("data-id", food.id);
+                const favItem = document.createElement("div"); favItem.className = 'fav-item'; favItem.setAttribute("data-id", food.id);
                 favItem.innerHTML = `<img src="${food.image}" alt="${food.title}"><span>${food.title}</span><button class="remove-fav-btn">Hapus</button>`;
-                
-                favItem.addEventListener("click", (e) => {
-                    if (!e.target.classList.contains("remove-fav-btn")) openRecipeModal(food.id);
-                });
-
-                favItem.querySelector('.remove-fav-btn').onclick = (e) => {
-                    e.stopPropagation();
-                    removeFavorite(food.id);
-                };
+                favItem.addEventListener("click", (e) => { if (!e.target.classList.contains("remove-fav-btn")) openRecipeModal(food.id); });
+                favItem.querySelector('.remove-fav-btn').onclick = (e) => { e.stopPropagation(); removeFavorite(food.id); };
                 favoritesList.appendChild(favItem);
             }
         });
     };
-
-    // Fungsi untuk menambah favorit
     const addFavorite = (foodId) => {
-        let favorites = getFavorites();
-        const food = foodData.find(f => f.id === foodId);
-        if (!favorites.includes(foodId)) {
-            favorites.push(foodId);
-            saveFavorites(favorites);
-            renderFavorites();
-            alert(`${food.title} ditambahkan ke favorit!`);
-        } else {
-            alert(`${food.title} sudah ada di favorit.`);
-        }
+        let favorites = getFavorites(); const food = foodData.find(f => f.id === foodId);
+        if (!favorites.includes(foodId)) { favorites.push(foodId); saveFavorites(favorites); renderFavorites(); alert(`${food.title} ditambahkan ke favorit!`); } 
+        else { alert(`${food.title} sudah ada di favorit.`); }
     };
-
-    // Fungsi untuk menghapus favorit
-    const removeFavorite = (foodId) => {
-        let favorites = getFavorites();
-        favorites = favorites.filter(id => id !== foodId);
-        saveFavorites(favorites);
-        renderFavorites();
-    };
+    const removeFavorite = (foodId) => { let favorites = getFavorites(); favorites = favorites.filter(id => id !== foodId); saveFavorites(favorites); renderFavorites(); };
 
     // --- FUNGSI RENDER & FILTER ---
     const renderFoodCards = (dataToRender) => {
         foodCatalog.innerHTML = "";
         dataToRender.forEach(food => {
             if (!reactionsStorage[food.id]) reactionsStorage[food.id] = { likes: 0, dislikes: 0 };
-            const card = document.createElement("article");
-            card.className = "food-card";
-            card.setAttribute('data-id', food.id);
-            card.innerHTML = `
-                <img src="${food.image}" alt="${food.title}" class="food-img">
-                <div class="card-content">
-                    <h3>${food.title}</h3>
-                    <p class="origin">${food.origin}</p>
-                    <p class="card-description">${food.description}</p> 
-                    <div class="card-actions">
-                        <button class="action-btn favorite-btn" title="Simpan ke Favorit">⭐</button>
-                        <button class="action-btn like-btn">👍 <span class="like-count">${reactionsStorage[food.id].likes}</span></button>
-                        <button class="action-btn dislike-btn">👎 <span class="dislike-count">${reactionsStorage[food.id].dislikes}</span></button>
-                        <button class="action-btn comment-card-btn" title="Beri Komentar">💬</button> 
-                    </div>
-                </div>
-            `;
+            const card = document.createElement("article"); card.className = "food-card"; card.setAttribute('data-id', food.id);
+            card.innerHTML = `<img src="${food.image}" alt="${food.title}" class="food-img"><div class="card-content"><h3>${food.title}</h3><p class="origin">${food.origin}</p><p class="card-description">${food.description}</p><div class="card-actions"><button class="action-btn favorite-btn" title="Simpan ke Favorit">⭐</button><button class="action-btn like-btn">👍 <span class="like-count">${reactionsStorage[food.id].likes}</span></button><button class="action-btn dislike-btn">👎 <span class="dislike-count">${reactionsStorage[food.id].dislikes}</span></button><button class="action-btn comment-card-btn" title="Beri Komentar">💬</button></div></div>`;
             foodCatalog.appendChild(card);
         });
         addEventListenersToCards();
     };
-
-    const filterFoods = () => {
-        const searchText = searchInput.value.toLowerCase();
-        const selectedRegion = regionFilter.value.toLowerCase();
-        const filteredData = foodData.filter(food => {
-            const matchesSearch = food.title.toLowerCase().includes(searchText);
-            const matchesRegion = selectedRegion === "all" || food.origin.toLowerCase().replace(/\s+/g, '') === selectedRegion.replace(/\s+/g, '');
-            return matchesSearch && matchesRegion;
-        });
-        renderFoodCards(filteredData);
-    };
+    const filterFoods = () => { const searchText = searchInput.value.toLowerCase(); const selectedRegion = regionFilter.value.toLowerCase(); const filteredData = foodData.filter(food => { const matchesSearch = food.title.toLowerCase().includes(searchText); const matchesRegion = selectedRegion === "all" || food.origin.toLowerCase().replace(/\s+/g, '') === selectedRegion.replace(/\s+/g, ''); return matchesSearch && matchesRegion; }); renderFoodCards(filteredData); };
 
     // --- FUNGSI INTERAKSI ---
     const addEventListenersToCards = () => {
         document.querySelectorAll(".food-card").forEach(card => {
             const id = card.dataset.id;
             const food = foodData.find(f => f.id === id);
-            card.addEventListener("click", (e) => {
-                if (!e.target.closest('.card-actions')) {
-                    openRecipeModal(id);
-                }
-            });
-            card.querySelector(".favorite-btn").addEventListener("click", (e) => {
-                e.stopPropagation();
-                if (!isLoggedIn) return loginModal.style.display = 'block';
-                addFavorite(id);
-            });
-            card.querySelector(".like-btn").addEventListener("click", (e) => {
-                e.stopPropagation();
-                if (!isLoggedIn) return loginModal.style.display = 'block';
-                reactionsStorage[id].likes++;
-                updateReactions(id);
-            });
-            card.querySelector(".dislike-btn").addEventListener("click", (e) => {
-                e.stopPropagation();
-                if (!isLoggedIn) return loginModal.style.display = 'block';
-                reactionsStorage[id].dislikes++;
-                updateReactions(id);
-            });
+            card.addEventListener("click", (e) => { if (!e.target.closest('.card-actions')) openRecipeModal(id); });
+            card.querySelector(".favorite-btn").addEventListener("click", (e) => { e.stopPropagation(); if (!isLoggedIn) return loginModal.style.display = 'block'; addFavorite(id); });
+            card.querySelector(".like-btn").addEventListener("click", (e) => { e.stopPropagation(); if (!isLoggedIn) return loginModal.style.display = 'block'; reactionsStorage[id].likes++; updateReactions(id); });
+            card.querySelector(".dislike-btn").addEventListener("click", (e) => { e.stopPropagation(); if (!isLoggedIn) return loginModal.style.display = 'block'; reactionsStorage[id].dislikes++; updateReactions(id); });
             card.querySelector(".comment-card-btn").addEventListener("click", (e) => {
-                e.stopPropagation();
-                if (!isLoggedIn) return loginModal.style.display = 'block';
-                currentFoodId = id;
-                commentModal.style.display = "block";
+                e.stopPropagation(); if (!isLoggedIn) return loginModal.style.display = 'block';
+                currentFoodId = id; commentModal.style.display = "block";
                 commentModalTitle.innerText = `Komentar untuk: ${food.title}`;
-                commentNameInput.value = loggedUser;
-                commentNameInput.readOnly = true;
+                commentNameInput.value = loggedUser; commentNameInput.readOnly = true;
                 displayComments(id);
             });
         });
     };
-    
-    const openRecipeModal = (id) => {
-        const food = foodData.find(f => f.id === id);
-        if (!food) return;
-        currentFoodId = id;
-        modal.classList.remove("hide");
-        modal.classList.add("show");
-        modal.style.display = "flex";
-        disableBodyScroll();
-        modalTitle.innerText = food.title;
-        modalDesc.innerText = food.description;
-        modalCook.innerHTML = food.cookingSteps;
-        modalHistory.innerText = food.history;
-        modalImage.src = food.image;
-        modalImage.alt = food.title;
-        updateReactions(id);
-    };
-
-    const updateReactions = (id) => {
-        const reactions = reactionsStorage[id] || { likes: 0, dislikes: 0 };
-        document.querySelectorAll(".food-card").forEach(card => {
-            if (card.dataset.id === id) {
-                card.querySelector(".like-count").innerText = reactions.likes;
-                card.querySelector(".dislike-count").innerText = reactions.dislikes;
-            }
-        });
-        if (currentFoodId === id) {
-            modalLikeCount.innerText = reactions.likes;
-            modalDislikeCount.innerText = reactions.dislikes;
-        }
-    };
-
+    const openRecipeModal = (id) => { const food = foodData.find(f => f.id === id); if (!food) return; currentFoodId = id; modal.classList.remove("hide"); modal.classList.add("show"); modal.style.display = "flex"; disableBodyScroll(); modalTitle.innerText = food.title; modalDesc.innerText = food.description; modalCook.innerHTML = food.cookingSteps; modalHistory.innerText = food.history; modalImage.src = food.image; modalImage.alt = food.title; updateReactions(id); };
+    const updateReactions = (id) => { const reactions = reactionsStorage[id] || { likes: 0, dislikes: 0 }; document.querySelectorAll(".food-card").forEach(card => { if (card.dataset.id === id) { card.querySelector(".like-count").innerText = reactions.likes; card.querySelector(".dislike-count").innerText = reactions.dislikes; } }); if (currentFoodId === id) { modalLikeCount.innerText = reactions.likes; modalDislikeCount.innerText = reactions.dislikes; } };
     const disableBodyScroll = () => document.body.classList.add("modal-open");
     const enableBodyScroll = () => document.body.classList.remove("modal-open");
-
+    const closeAllModals = () => { if (modal.style.display === "flex") { modal.classList.remove("show"); modal.classList.add("hide"); setTimeout(() => { modal.style.display = "none"; enableBodyScroll(); }, 400); } commentModal.style.display = "none"; loginModal.style.display = "none"; };
+    
     const displayComments = (id) => {
         const comments = commentsStorage[id] || [];
         commentsList.innerHTML = "";
-        if (comments.length === 0) {
-            commentsList.innerHTML = '<div class="no-comments">Belum ada komentar untuk resep ini.</div>';
-            return;
-        }
+        if (comments.length === 0) { commentsList.innerHTML = '<div class="no-comments">Belum ada komentar untuk resep ini.</div>'; return; }
         comments.forEach(comment => {
-            const commentElement = document.createElement("div");
-            commentElement.className = "comment-item";
+            const commentElement = document.createElement("div"); commentElement.className = "comment-item";
             commentElement.innerHTML = `<div class="comment-author">${comment.name}</div><div class="comment-date">${comment.date}</div><div class="comment-text">${comment.text}</div>`;
             commentsList.appendChild(commentElement);
         });
     };
 
-    const closeAllModals = () => {
-        if (modal.style.display === "flex") {
-            modal.classList.remove("show");
-            modal.classList.add("hide");
-            setTimeout(() => { modal.style.display = "none"; enableBodyScroll(); }, 400);
-        }
-        commentModal.style.display = "none";
-        loginModal.style.display = "none";
-    };
+    submitCommentBtn.addEventListener("click", () => {
+        const text = commentTextInput.value.trim();
+        if (!text) return alert("Mohon isi komentar!");
+        const comment = { name: loggedUser, text, date: new Date().toLocaleString("id-ID", { dateStyle: 'long', timeStyle: 'short' }) };
+        if (!commentsStorage[currentFoodId]) { commentsStorage[currentFoodId] = []; }
+        commentsStorage[currentFoodId].push(comment);
+        localStorage.setItem('comments', JSON.stringify(commentsStorage));
+        commentTextInput.value = "";
+        displayComments(currentFoodId);
+        alert("Komentar berhasil ditambahkan!");
+    });
 
-    // --- FUNGSI LOGIN & LOGOUT (DENGAN localStorage) ---
+    // --- FUNGSI LOGIN & LOGOUT ---
     const updateLoginUI = () => {
         if (isLoggedIn) {
-            usernameDisplay.innerText = loggedUser;
-            userGreeting.classList.remove("hidden");
-            loginButton.classList.add("hidden");
-            mobileLoginBtn.innerText = 'Logout';
+            usernameDisplay.innerText = loggedUser; userGreeting.classList.remove("hidden");
+            loginButton.classList.add("hidden"); mobileLoginBtn.innerText = 'Logout';
             mobileLoginBtn.onclick = () => { logoutButton.click(); };
-            renderFavorites(); // Tampilkan favorit saat login
+            renderFavorites();
         } else {
-            userGreeting.classList.add("hidden");
-            loginButton.classList.remove("hidden");
+            userGreeting.classList.add("hidden"); loginButton.classList.remove("hidden");
             mobileLoginBtn.innerText = 'Login';
             mobileLoginBtn.onclick = () => { loginModal.style.display = 'block'; };
             favoritesList.innerHTML = '<p class="empty-fav">Login untuk melihat resep favorit Anda.</p>';
         }
     };
-
     const checkLoginStatus = () => {
         const storedIsLoggedIn = localStorage.getItem('isLoggedIn');
         const storedLoggedUser = localStorage.getItem('loggedUser');
         if (storedIsLoggedIn === 'true' && storedLoggedUser) {
-            isLoggedIn = true;
-            loggedUser = storedLoggedUser;
+            isLoggedIn = true; loggedUser = storedLoggedUser;
             updateLoginUI();
         }
     };
@@ -286,6 +160,8 @@ document.addEventListener("DOMContentLoaded", () => {
     scrollTopBtn.addEventListener("click", () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
     window.addEventListener("scroll", () => { (window.scrollY > 300) ? scrollTopBtn.classList.add("visible") : scrollTopBtn.classList.remove("visible"); });
     closeBtn.addEventListener("click", closeAllModals);
+    closeCommentModal.addEventListener("click", () => commentModal.style.display = 'none');
+    closeLoginModal.addEventListener("click", () => loginModal.style.display = 'none');
     window.addEventListener("keydown", (e) => { if (e.key === "Escape") closeAllModals(); });
     window.addEventListener("click", (e) => { if (e.target === modal || e.target === commentModal || e.target === loginModal) closeAllModals(); });
     modalFavBtn.addEventListener("click", () => { if (!isLoggedIn) return loginModal.style.display = 'block'; addFavorite(currentFoodId); });
@@ -300,20 +176,9 @@ document.addEventListener("DOMContentLoaded", () => {
         commentNameInput.readOnly = true;
         displayComments(currentFoodId);
     });
-    submitCommentBtn.addEventListener("click", () => {
-        const text = commentTextInput.value.trim();
-        if (!text) return alert("Mohon isi komentar!");
-        const comment = { name: loggedUser, text, date: new Date().toLocaleString("id-ID", { dateStyle: 'long', timeStyle: 'short' }) };
-        if (!commentsStorage[currentFoodId]) commentsStorage[currentFoodId] = [];
-        commentsStorage[currentFoodId].push(comment);
-        commentTextInput.value = "";
-        displayComments(currentFoodId);
-        alert("Komentar berhasil ditambahkan!");
-    });
     loginButton.addEventListener("click", () => loginModal.style.display = 'block');
     logoutButton.addEventListener("click", () => {
-        isLoggedIn = false;
-        loggedUser = "";
+        isLoggedIn = false; loggedUser = "";
         localStorage.removeItem('isLoggedIn');
         localStorage.removeItem('loggedUser');
         updateLoginUI();
@@ -323,8 +188,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const name = loginNameInput.value.trim();
         const pass = loginPasswordInput.value.trim();
         if (!name || !pass) return alert("Mohon isi nama dan password!");
-        isLoggedIn = true;
-        loggedUser = name;
+        isLoggedIn = true; loggedUser = name;
         localStorage.setItem('isLoggedIn', 'true');
         localStorage.setItem('loggedUser', name);
         updateLoginUI();

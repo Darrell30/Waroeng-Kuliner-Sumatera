@@ -57,7 +57,6 @@ header .tagline {
     color: #e0d9ce;
 }
 
-/* --- Tombol Aksi Login (Desktop) --- */
 .user-actions-desktop {
     text-align: right;
 }
@@ -244,91 +243,31 @@ main {
 
 /* --- MODAL (POP-UP RESEP) --- */
 .modal { display: none; position: fixed; z-index: 2500; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); justify-content: center; align-items: center; }
-
-/* ▼▼▼ PERUBAHAN UTAMA ADA DI SINI ▼▼▼ */
-.modal-content {
-    background: #fffdf7;
-    padding: 0; /* Padding dipindahkan ke .modal-right */
-    border-radius: 12px;
-    max-width: 800px;
-    width: 90%;
-    border: 2px solid #a47551;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-    display: flex;
-    flex-direction: column; /* Mengatur layout menjadi vertikal */
-    position: relative;
-    max-height: 85vh;
-    overflow-y: auto;
-    overflow-x: hidden;
-}
-
-.modal-left {
-    width: 100%; /* Lebar gambar penuh */
-}
-
-.modal-right {
-    padding: 2rem; /* Beri padding di area teks */
-}
-
-.modal-image {
-    width: 100%;
-    height: 300px; /* Beri tinggi tetap agar proporsional */
-    object-fit: cover;
-    border-radius: 10px 10px 0 0; /* Sudut tumpul hanya di atas */
-    border-bottom: 2px solid #a47551; /* Garis pemisah */
-}
-
-.comment-btn {
-    background-color: #5a4635;
-    color: #f4f1ea;
-    border: none;
-    padding: 0.8rem 1.5rem;
-    border-radius: 25px;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 500;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin-top: 1rem;
-    align-self: flex-start; /* Agar tombol tidak meregang penuh */
-}
-
-.comment-btn:hover {
-    background-color: #4a3f35;
-}
-
-.login-btn {
-    background-color: #5a4635;
-    color: #f4f1ea;
-    border: none;
-    padding: 0.8rem 1.5rem;
-    border-radius: 25px;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 500;
-    font-size: 1rem;
-    cursor: pointer;
-    width: 100%;
-    margin-top: 1rem;
-    transition: background-color 0.3s;
-}
-
-.login-btn:hover {
-    background-color: #4a3f35;
-}
-
+.modal-content { background: #fffdf7; padding: 0; border-radius: 12px; max-width: 800px; width: 90%; border: 2px solid #a47551; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); display: flex; flex-direction: column; position: relative; max-height: 85vh; overflow-y: auto; overflow-x: hidden; }
+.modal-left { width: 100%; }
+.modal-right { padding: 2rem; }
+.modal-image { width: 100%; height: 300px; object-fit: cover; border-radius: 10px 10px 0 0; border-bottom: 2px solid #a47551; }
 .modal.show .modal-content { animation: flipIn 0.6s ease forwards; }
 .modal.hide .modal-content { animation: flipOut 0.4s ease forwards; }
 @keyframes flipIn { 0% { transform: rotateY(90deg); opacity: 0; } 100% { transform: rotateY(0deg); opacity: 1; } }
 @keyframes flipOut { 0% { transform: rotateY(0deg); opacity: 1; } 100% { transform: rotateY(90deg); opacity: 0; } }
 .close-btn { position: absolute; right: 20px; top: 20px; font-size: 1.5rem; cursor: pointer; color: #a47551; z-index: 2; background-color: rgba(255, 253, 247, 0.7); border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; }
 #modal-cook ul { padding-left: 1.5rem; }
-.comment-modal { display: none; position: fixed; z-index: 2600; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); }
-.comment-modal-content { background: #fffdf7; margin: 5% auto; padding: 2rem; border-radius: 12px; max-width: 700px; width: 90%; max-height: 85vh; overflow-y: auto; border: 2px solid #a47551; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); position: relative; }
+
+/* --- KOMENTAR & LOGIN MODAL --- */
+.comment-modal, .login-modal { display: none; position: fixed; z-index: 2600; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); }
+.comment-modal-content, .login-modal-content { background: #fffdf7; margin: 5% auto; padding: 2rem; border-radius: 12px; max-width: 700px; width: 90%; max-height: 85vh; overflow-y: auto; border: 2px solid #a47551; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); position: relative; animation: slideUp 0.4s ease; }
+.login-modal-content { max-width: 400px; margin: 15% auto; }
 .comment-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; border-bottom: 2px solid #c8a27c; padding-bottom: 1rem; }
 .form-group { margin-bottom: 1rem; } .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; color: #5a4635; } .form-group input, .form-group textarea { width: 100%; padding: 0.8rem; border: 1px solid #a47551; border-radius: 5px; background-color: #fffdf7; font-family: 'Poppins', sans-serif; } .form-group textarea { min-height: 100px; resize: vertical; }
 .submit-comment-btn { background-color: #5a4635; color: #fff; padding: 0.8rem 2rem; border: none; border-radius: 25px; cursor: pointer; font-size: 1rem; transition: background-color 0.3s ease; }
-.login-modal { display: none; position: fixed; z-index: 2700; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); }
-.login-modal-content { background: #fffdf7; margin: 15% auto; padding: 2rem; border-radius: 12px; max-width: 400px; width: 90%; border: 2px solid #a47551; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); position: relative; }
+.login-btn { background-color: #5a4635; color: #f4f1ea; border: none; padding: 0.8rem 1.5rem; border-radius: 25px; font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 1rem; cursor: pointer; width: 100%; margin-top: 1rem; transition: background-color 0.3s; }
+.login-btn:hover, .submit-comment-btn:hover { background-color: #4a3f35; }
+.comment-btn { background-color: #5a4635; color: #f4f1ea; border: none; padding: 0.8rem 1.5rem; border-radius: 25px; font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 1rem; cursor: pointer; transition: background-color 0.3s; margin-top: 1rem; align-self: flex-start; }
+.comment-btn:hover { background-color: #4a3f35; }
+#close-comment-modal { font-size: 2rem; cursor: pointer; color: #a47551; line-height: 1; }
+
+@keyframes slideUp { from {transform: translateY(50px); opacity: 0;} to {transform: translateY(0); opacity: 1;} }
 footer { text-align: center; margin-top: 3rem; padding: 1.5rem; background-color: #4a3f35; color: #e0d9ce; }
 
 /* --- MEDIA QUERIES (BAGIAN RESPONSIVE) --- */
@@ -354,7 +293,7 @@ footer { text-align: center; margin-top: 3rem; padding: 1.5rem; background-color
         flex-direction: column; 
     }
     .food-card {
-        flex-direction: column; /* Kartu utama juga menjadi vertikal di HP */
+        flex-direction: column;
     }
     .food-card img {
         width: 100%;
